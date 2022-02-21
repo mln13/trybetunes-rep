@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Search from './pages/Search';
 import Album from './pages/Album';
@@ -90,52 +90,63 @@ class App extends React.Component {
     } = this.state;
     return (
       <BrowserRouter>
-        <Route
-          path="/"
-          render={ () => (
-            <Login
-              nameForLogin={ this.nameInput }
-              disabledLogin={ disabledSwitchLoginInput }
-              clickButtonLogin={ this.clickButtonLogin }
-              redirectToSearch={ redirectToSearch }
-              inputValue={ typedName }
-              loading={ loading }
-            />) }
-        />
-        <Route
-          path="/search"
-          render={ () => (
-            <Search
-              disabledSwitchSearchInput={ disabledSwitchSearchInput }
-              typedSearch={ typedSearch }
-              searchInput={ this.searchInput }
-              findAlbumArtist={ this.findAlbumArtist }
-              loading={ loading }
-              searchList={ list }
-              listSearchInput={ listSearchInput }
-            />) }
-        />
-        <Route
-          path="/album/:id"
-          render={ () => <Album /> }
-        />
-        <Route
-          path="/favorites"
-          render={ () => <Favorites /> }
-        />
-        <Route
-          path="/profile"
-          render={ () => <Profile /> }
-        />
-        <Route
-          exact
-          path="/profile/edit"
-          render={ () => <ProfileEdit /> }
-        />
-        <Route
-          path=""
-          render={ () => <NotFound /> }
-        />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={ () => (
+              <Login
+                nameForLogin={ this.nameInput }
+                disabledLogin={ disabledSwitchLoginInput }
+                clickButtonLogin={ this.clickButtonLogin }
+                redirectToSearch={ redirectToSearch }
+                inputValue={ typedName }
+                loading={ loading }
+              />) }
+          />
+          <Route
+            exact
+            path="/search"
+            render={ () => (
+              <Search
+                disabledSwitchSearchInput={ disabledSwitchSearchInput }
+                typedSearch={ typedSearch }
+                searchInput={ this.searchInput }
+                findAlbumArtist={ this.findAlbumArtist }
+                loading={ loading }
+                searchList={ list }
+                listSearchInput={ listSearchInput }
+              />) }
+          />
+          <Route
+            exact
+            path="/album/:id"
+            render={ (props) => (
+              <Album
+                { ...props }
+              />) }
+          />
+          <Route
+            exact
+            path="/favorites"
+            render={ () => <Favorites /> }
+          />
+          <Route
+            exact
+            path="/profile"
+            render={ () => <Profile /> }
+          />
+          <Route
+            exact
+            path="/profile/edit"
+            render={ () => <ProfileEdit /> }
+          />
+          <Route
+            exact
+            path=""
+            render={ () => <NotFound /> }
+          />
+        </Switch>
       </BrowserRouter>
     );
   }
