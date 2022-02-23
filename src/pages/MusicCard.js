@@ -51,10 +51,9 @@ class MusicCard extends React.Component {
       const {
         previewUrl,
         trackName,
-        // checkSong,
+        checkSong,
         trackId,
-        // checkIfFavoriteSong,
-        // checkFavoriteSong,
+        clickRemoved,
       } = this.props;
       const { isFavorite, loading } = this.state;
       return (
@@ -73,13 +72,12 @@ class MusicCard extends React.Component {
                 <input
                   id="favorite-music-checkbox"
                   data-testid={ `checkbox-music-${trackId}` }
-                  // checked={ checkIfFavoriteSong }
                   checked={ isFavorite }
                   type="checkbox"
-                  onChange={
-                    // checkFavoriteSong(checkSong);
-                    this.checkFavoriteSong
-                  }
+                  onChange={ (event) => (
+                    clickRemoved ? clickRemoved(checkSong)
+                      : this.checkFavoriteSong(event)
+                  ) }
                 />
               </label>
             </div>)
@@ -97,6 +95,7 @@ MusicCard.propTypes = {
     trackName: propTypes.string.isRequired,
   }).isRequired,
   trackId: propTypes.number.isRequired,
+  clickRemoved: propTypes.func.isRequired,
 };
 
 export default MusicCard;

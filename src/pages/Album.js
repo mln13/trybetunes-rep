@@ -71,8 +71,6 @@ class Album extends React.Component {
                   trackName={ song.trackName }
                   previewUrl={ song.previewUrl }
                   checkSong={ song }
-                  checkFavoriteSong={ this.checkFavoriteSong }
-                  // checkIfFavoriteSong={ this.checkIfFavoriteSong(song) }
                 />))}
           </div>
         ));

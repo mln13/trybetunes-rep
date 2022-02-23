@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Loading from './Loading';
 import MusicCard from './MusicCard';
 
@@ -18,16 +18,20 @@ class Favorites extends React.Component {
     this.musicsFromAlbum();
   }
 
-  componentDidUpdate() {
-    this.musicsFromAlbum();
-  }
-
   musicsFromAlbum = async () => {
     const musics = await getFavoriteSongs();
     this.setState({
       musics,
       loading: false,
     });
+  }
+
+  clickToRemove = async (checkSong) => {
+    this.setState({
+      loading: true,
+    });
+    await removeSong(checkSong);
+    this.musicsFromAlbum();
   }
 
   render() {
@@ -45,7 +49,7 @@ class Favorites extends React.Component {
                   trackName={ song.trackName }
                   previewUrl={ song.previewUrl }
                   checkSong={ song }
-                  checkFavoriteSong={ this.checkFavoriteSong }
+                  clickRemoved={ this.clickToRemove }
                 />))}
           </div>)
     );
